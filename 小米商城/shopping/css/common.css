@@ -1,0 +1,702 @@
+/* ================ 1. 全局重置 & 盒模型 ================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  /* 统一盒模型，确保设置的width包含padding和border */
+  box-sizing: border-box;
+}
+
+/* 伪元素重置，确保全局一致性 */
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ================ 2. 基础元素规范化 ================ */
+body {
+  /* 小米官网核心字体栈：优先苹方，其次是安卓默认，最后是通用无衬线字体 */
+  font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font-size: 14px;
+  /* 小米官网基础字号 */
+  line-height: 1.5;
+  /* 统一行高 */
+  color: #333;
+  /* 基础文字颜色 */
+  background-color: #f5f5f5;
+  /* 小米官网常用背景灰 */
+}
+
+/* 清除列表默认样式 */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 链接样式重置 */
+a {
+  color: #757575;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+/* 鼠标移上链接（小米橙色调） */
+a:hover {
+  color: #ff6700;
+}
+
+/* 图片垂直对齐，消除底部空隙 */
+img {
+  border-style: none;
+  vertical-align: middle;
+}
+
+/* ================ 3. 表单元素规范化 ================ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  /* 继承父级字体样式 */
+  font: inherit;
+  color: inherit;
+}
+
+/* 按钮统一样式 */
+button {
+  overflow: visible;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ================ 4. 工具类（小米官网常用） ================ */
+/* 清除浮动 */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* 隐藏元素 */
+.hide {
+  display: none !important;
+}
+
+/* 黑色导航开始 */
+.shortcut {
+  width: 100%;
+  height: 40px;
+  font-size: 12px;
+  line-height: 40px;
+  background-color: #333;
+}
+
+.w {
+  width: 1226px;
+  height: 100%;
+  margin: 0 auto;
+  /* background-color: pink; */
+}
+
+.shortcut-left {
+  float: left;
+}
+
+.shortcut-right {
+  float: right;
+
+}
+
+.shortcut li {
+  float: left;
+}
+
+.shortcut li a {
+  position: relative;
+  color: #b0b0b0;
+  padding: 0 4px;
+  /* padding: 0 2px; */
+}
+
+.shortcut-right li a {
+  padding: 0 5px;
+}
+
+.shortcut-right li:nth-child(3)>a {
+  padding: 0 10px;
+}
+
+.shortcut li a::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 14px;
+  background-color: #b0b0b0;
+
+}
+
+.shortcut-left li:first-child a::before {
+  display: none;
+}
+
+.shortcut-right li:first-child a::before {
+  display: none;
+}
+
+.shortcut-right li:nth-child(4) a::before {
+  display: none;
+}
+
+.shortcut ul li {
+  position: relative;
+}
+
+.shortcut ul li a:hover {
+  color: #fff;
+}
+
+
+.shortcut ul li .download {
+  position: absolute;
+  width: 124px;
+  /* 为了做一个动画的效果 */
+  height: 0;
+  background-color: #fff;
+  box-shadow: 0 1px 5px #aaa;
+  top: 40px;
+  left: 50%;
+  /* margin-left: -62px; */
+  /* 弹窗本身也得相对于他的父盒子居中对齐 */
+  transform: translateX(-50%);
+  /* 搭配height:0,这样内容不会溢出 */
+  overflow: hidden;
+  z-index: 10;
+  transition: all 0.3s;
+  display: flex;
+  /* 改变主轴方向 */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.download img {
+  width: 90px;
+}
+
+.download p {
+  color: #333;
+  font-size: 14px;
+  /* line-height: 14px; */
+}
+
+.shortcut ul li:hover>.download {
+  height: 148px;
+}
+
+.shortcut ul li .stri {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-bottom: 8px solid #fff;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  bottom: 0;
+  left: 50%;
+  /* transform: translateX(-50%); */
+  margin-left: -8px;
+  /* display: none; */
+  /* 或者 */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.shortcut ul li:hover>.stri {
+  /* display: block; */
+  /* 可以有一个过渡的效果 */
+  opacity: 1;
+  visibility: visible;
+}
+
+.shortcut-right .cart {
+  position: relative;
+  width: 120px;
+  height: 40px;
+  background-color: #424242;
+  text-align: center;
+}
+
+.shortcut-right .cart i {
+  font-size: 15px;
+  color: #b0b0b0;
+}
+
+.shortcut-right .cart:hover {
+  background-color: #fff;
+  /* z-index: 50; */
+  /* color: #e4702d; */
+}
+
+/* 得让一经过盒子才字体变色不是经过标签 */
+.shortcut-right .cart:hover>a,
+.shortcut-right .cart:hover>i {
+  color: #e4702d;
+}
+
+.shortcut-right .cart .car-list {
+  display: none;
+  position: absolute;
+  width: 379px;
+  height: 0;
+  top: 40px;
+  right: 0px;
+  box-shadow: 0 1px 5px #aaa;
+  overflow: hidden;
+  /* transition: all 0.5s; */
+  color: #424242;
+  text-align: center;
+  line-height: 153px;
+  /* z-index: 31; */
+
+}
+
+.shortcut-right .cart {
+  transition: all 0.3s;
+}
+
+.shortcut-right .cart:hover>.car-list {
+  background-color: #fff;
+  display: block;
+  height: 153px;
+  z-index: 999;
+  /* z-index: 10; */
+}
+
+.nav {
+  height: 100px;
+  /* background-color: pink; */
+}
+
+.nav .header-logo {
+  position: relative;
+  float: left;
+  /* 直接加上边距会影响下面的盒子，所以要加浮动 */
+  margin-top: 22px;
+  width: 62px;
+  height: 56px;
+}
+
+.nav .header-logo a::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  height: 56px;
+  width: 56px;
+  /* background就是从css里面找图片的，所以应该跑到他的上一级用../ */
+  background: url(../images/logo-mi2.png) no-repeat;
+  background-size: 56px;
+  /* 开启硬件加速 */
+  transform: translateZ(0);
+  z-index: 1;
+  opacity: 1;
+}
+
+.nav .header-logo {
+  text-align: left;
+  text-indent: -9999em;
+}
+
+.nav .header-nav {
+  float: left;
+  width: 850px;
+  height: 100px;
+  /* background-color: skyblue; */
+  /* z-index: 10; */
+}
+
+.nav .header-nav ul {
+  float: left;
+  width: 1130px;
+  height: 100px;
+  /* background-color: orange */
+  padding: 12px 0 0 30px;
+}
+
+.nav .header-nav ul li {
+  float: left;
+}
+
+/* 别瞎用子代选择器 */
+.nav .header-nav ul .category {
+  float: left;
+  width: 142px;
+  height: 88px;
+  padding: 0 15px 0 0;
+}
+
+.nav .header-nav ul .nav-item {
+  float: left;
+  height: 88px;
+  padding: 26px 10px 38px;
+}
+
+.nav .header-search {
+  float: right;
+  width: 296px;
+  height: 50px;
+  margin: 25px 0 0;
+  /* background-color: yellowgreen; */
+}
+
+/* 用表单域可以告诉网站搜索到地方 */
+.nav .header-search .search-form {
+  position: relative;
+  width: 296px;
+  height: 50px;
+  z-index: 20;
+
+}
+
+.nav .header-search .search-form input[type=search] {
+  position: absolute;
+  outline: none;
+  border: 1px solid #e0e0e0;
+  top: 0;
+  right: 51px;
+  width: 233px;
+  height: 50px;
+  font-size: 14px;
+  line-height: 50px;
+  padding: 0 10px;
+}
+
+.nav .header-search .search-form button[type=submit] {
+  top: 0;
+  right: 0;
+  position: absolute;
+  width: 52px;
+  height: 50px;
+  padding: 1px 6px;
+  background-color: #fff;
+  color: #616161;
+  z-index: 2;
+  line-height: 50px;
+  border: 1px solid #e0e0e0;
+
+}
+
+.nav .header-search .search-form button[type=submit]:hover {
+  background-color: #ff6700;
+  color: #fff;
+  transition: all 0.3s;
+
+}
+
+/* 这是两个类名 */
+.nav .header-search .search-form button .iconfont {
+  font-size: 24px;
+}
+
+.product-container {
+  width: 1226px;
+  height: 670px;
+  /* background-color: green; */
+}
+
+.product {
+  width: 1226px;
+  height: 644px;
+  margin-bottom: 26px;
+}
+
+/* 不要给它用定位，用浮动就好 */
+.home-top {
+  width: 1226px;
+  height: 460px;
+  /* background-color: rgb(114, 114, 232); */
+}
+
+.product .home-top .left-list {
+  /* box-sizing: content-box; */
+  float: left;
+  width: 234px;
+  height: 460px;
+  background-color: #9d9d9d;
+  padding: 20px 0;
+}
+
+/* 相对的是那个小图标 */
+.product .home-top .left-list li {
+  position: relative;
+  width: 234px;
+  height: 42px;
+  background-color: #9d9d9e;
+}
+
+.product .home-top .left-list li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 42px;
+  color: #fff;
+  padding-left: 30px;
+}
+
+.product .home-top .left-list li a:hover {
+  background-color: #ff6700;
+}
+
+/* .product .home-top .left-list li i {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  width: 16px;
+  height: 16.67px;
+
+} */
+.product .home-top .left-list li a::after {
+  position: absolute;
+  content: "\e715";
+  font-family: "iconfont";
+  color: #e0e0e0;
+  /* font-size: 16px; */
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* background-color: blue; */
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+
+
+}
+
+.right-list {
+  float: left;
+  /* 相对那个轮播小块 */
+  position: relative;
+  width: 992px;
+  height: 460px;
+}
+
+.home-top .right-list .picture {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* margin-bottom: 20px; */
+  /* background-color: skyblue; */
+  background: url(../upload/ad.webp) no-repeat;
+  background-size: 100% 100%;
+}
+
+.home-top .right-list .suoyin-pre {
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 41px;
+  height: 69px;
+  background: url(//i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -84px 50%;
+  z-index: 10;
+}
+
+.home-top .right-list .suoyin-pre:hover::before {
+  content: "";
+  display: block;
+  width: 41px;
+  height: 69px;
+  background: url(//i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat;
+}
+
+
+.home-top .right-list .suoyin-next {
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  width: 41px;
+  height: 69px;
+  background: url(//i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -125px 50%;
+  z-index: 10;
+}
+
+.home-top .right-list .suoyin-next:hover::before {
+  content: "";
+  display: block;
+  width: 41px;
+  height: 69px;
+  background: url(//i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -42px 50%;
+}
+
+.home-top .right-list .circle-button {
+  /* 用flex布局会更好 */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  width: 400px;
+  height: 21px;
+  left: auto;
+  right: 30px;
+  bottom: 20px;
+  /* text-align: right; */
+  /* background-color: rgb(195, 143, 143); */
+}
+
+.circle-button a {
+
+  box-sizing: content-box;
+  margin: 0 4px;
+  width: 6px;
+  height: 6px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-color: hsla(0, 0%, 100%, .3);
+  opacity: 1;
+  overflow: hidden;
+
+
+}
+
+
+
+
+.home-bottom {
+  /* 不能写宽度，否则会覆盖原来的w的 */
+  margin-top: 14px;
+  display: flex;
+  /* justify-content: space-between; */
+  /* gap: 10px; */
+  height: 170px;
+  /* background-color: skyblue; */
+  background-color: #fff;
+
+}
+
+.home-bottom .span1 {
+  /* margin-left: 14px;
+  /* 最小高度是1px,比1px大的话就会撑开盒子 */
+  /* min-height: 1px; */
+  /* flex: 1; */
+  /* 不能写flex了，这样会把那个大盒子撑大  就不是234了*/
+  width: 234px;
+  height: 170px;
+  /* background-color: rgb(174, 98, 98); */
+  background-color: #fff;
+  margin-right: 10px;
+
+}
+
+.home-bottom .span1 ul {
+  display: flex;
+  /* box-sizing: content-box; */
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 234px;
+  height: 170px;
+  padding: 3px;
+  background-color: #5d5751;
+}
+
+.home-bottom .span1 ul li {
+  position: relative;
+  /* 相对于那个伪元素而言的 */
+  width: 76px;
+  height: 82px;
+  padding: 0 3px;
+  background-color: #5f5750;
+}
+
+.home-bottom .span1 ul li::before {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  background-color: #665e57;
+  content: "";
+  width: 1px;
+  height: 70px;
+}
+
+.home-bottom .span1 ul li::after {
+  position: absolute;
+
+  background-color: #665e57;
+  content: "";
+  top: -1px;
+  left: 6px;
+  width: 64px;
+  height: 1px;
+}
+
+.home-bottom .span1 ul li a {
+
+  display: block;
+  margin-top: 18px;
+  /* 文字溢出有省略号 */
+  text-overflow: ellipsis;
+  white-space: no-wrap;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+}
+
+.home-bottom .span1 ul li a img {
+  width: 24px;
+  height: 24px;
+  margin: 0 23px 4px;
+}
+
+/* 得设置宽高不然就有空位 */
+.span2 {
+  width: 992px;
+  height: 170px;
+}
+
+.span2 .product-picture {
+  display: flex;
+  justify-content: space-between;
+  /* gap: 10px; */
+  /* justify-content: center; */
+}
+
+.home-bottom .span2 .product-picture li img {
+  display: block;
+  width: 316px;
+  height: 170px;
+  /* flex: 1; */
+}
+
+.home-bottom .span2 .product-picture li {
+  margin-right: 10px;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.08);
+
+}
+
+.home-bottom .span2 .product-picture li:last-child {
+  margin-right: 0;
+}
+
+.home-bottom .span2 .product-picture li:hover {
+  display: block;
+  /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); */
+  /* box-shadow: 14px 20px 8px, rgba(0, 0, 0, 0.12); */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+}
