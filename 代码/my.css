@@ -1,0 +1,312 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  /* 提升画布拖拽体验，不影响文本输入 */
+}
+
+/* CSS 变量 */
+:root {
+  /* -- 是 CSS 自定义变量的固定语法，定义完之后才能被var使用 */
+  --bg-primary: #f8f9fc;
+  --bg-sidebar: #fff;
+  --bg-tip: #A9B4C4;
+  --border-color: #C19A6B;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --accent-color: #B88E8D;
+  --accent-hover: #E8D4D4;
+  --canvas-bg: #fcfcfd;
+  /* 浅色系的背景变换 */
+  --grid-color: #d1d5db;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  /* 小阴影 */
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  /* 中等的阴影 */
+  --toolbar-bg: rgba(255, 255, 255, 0.8);
+  --footer-bg: #f9fafb;
+}
+
+body.dark {
+  /* 必须写在：root之后 */
+  --bg-primary: #1e1f2c;
+  --bg-sidebar: #25262e;
+  --border-color: #3a3b47;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --accent-color: #8b9cff;
+  --accent-hover: #6f7fdf;
+  --canvas-bg: #1e1f2c;
+  --grid-color: #3a3b47;
+  --toolbar-bg: rgba(44, 45, 58, 0.9);
+  --footer-bg: #25262e;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  transition: background 0.2s ease, color 0.2s;
+  /* 背景色会变得更加缓慢 */
+}
+
+/* 主布局 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* 元素的高度完全等于浏览器当前可见窗口的高度 */
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部导航栏*/
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-sidebar);
+  backdrop-filter: blur(12px);
+  border-bottom: 3px solid var(--border-color);
+  z-index: 10;
+
+}
+
+.left-area {
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+
+}
+
+/* 图形按钮样式（更好看） */
+.shape {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.shape:hover {
+  background: var(--accent-hover);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.shape.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* .float-tool {
+  display: none;
+  position: fixed;
+  width: 300px;
+  height: 1075px;
+
+} */
+
+/* 欢迎屏幕 (覆盖层) */
+.welcome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+  /* 点击“穿透”遮罩层，按钮可以被正常点击。 */
+  transition: opacity 0.2s;
+}
+
+.welcome-card {
+  background: var(--bg-tip);
+  padding: 28px 36px;
+  border-radius: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  pointer-events: auto;
+  max-width: 360px;
+  color: #444;
+}
+
+.welcome-card button {
+  margin-top: 20px;
+  background: var(--accent-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 40px;
+  color: #F5F5F5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.welcome-card button:hover {
+  background: #5A6A7A;
+}
+
+canvas {
+  cursor: default;
+}
+
+canvas.grabbing {
+  cursor: grabbing !important;
+}
+
+.canvas-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  /* 画布自己的滚动由平移控制，不出现滚动条 */
+}
+
+
+
+.right-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  gap: 5px;
+
+
+}
+
+.right-area div {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.right-area div:hover {
+  background: linear-gradient(135deg, #9AAF9F, #B4C4B9);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+
+.right-area div.active {
+  background: linear-gradient(135deg, #9AAF9F, #B4C4B9);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* 浮动面板 */
+.property-panel {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 260px;
+  background: rgba(30, 30, 40, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px;
+  color: white;
+  z-index: 200;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-family: sans-serif;
+}
+
+.panel-title {
+  font-size: 15px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 6px;
+}
+
+.property-group {
+  margin-bottom: 12px;
+}
+
+.property-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.property-group input,
+.property-group select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.property-group input[type="color"] {
+  height: 30px;
+  padding: 2px;
+}
+
+.style-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.style-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.style-btn.active {
+  background: #3b82f6;
+}
+
+.filter-slider {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.footer {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: var(--footer-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  z-index: 60;
+}
+
+.footer .stats,
+.footer .scale,
+.footer .view {
+  font-size: 13px;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="my.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- 顶部栏: 主菜单+主题切换 -->
+    <div class="top-bar">
+      <div class="left-area">
+        <div class="shape" data-tool="select">
+          <i class="fa-solid fa-mouse"></i>
+        </div>
+        <div class="shape" data-tool="hand">
+          <i class="fa-solid fa-hand"></i>
+        </div>
+        <div class="shape" data-tool="rect">
+          <i class="fa-solid fa-square"></i>
+        </div>
+        <div class="shape" data-tool="circle">
+          <i class="fa-solid fa-circle"></i>
+        </div>
+        <!--等边三角形 -->
+        <div class="shape" data-tool="triangle">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <div class="shape" data-tool="text">
+          <i class="fa-solid fa-font"></i>
+        </div>
+        <div class="shape" data-tool="image">
+          <i class="fa-solid fa-image"></i>
+        </div>
+      </div>
+      <div class="right-area">
+
+
+        <div data-tool="reset">重置视图</div>
+        <div class="icon-btn" id="themeToggleBtn" data-tool="item"><i class="fas fa-moon"></i> 主题</div>
+
+      </div>
+
+
+    </div>
+    <!-- 画布区域 -->
+    <div class="canvas-area" id="canvasContainer">
+      <canvas id="whiteboardCanvas"></canvas>
+      <!-- 欢迎屏幕 (当无图形时展示) -->
+      <div id="welcomeScreen" class="welcome">
+        <div class="welcome-card">
+          <i class="fas fa-pencil-alt" style="font-size: 40px; color: var(--accent-color);"></i>
+          <h3>开始绘制</h3>
+          <p>点击上方选择图形，拖拽画布即可绘制图形，拖拽图形可移动位置，按 Delete 删除选中图形。</p>
+          <button id="dismissWelcomeBtn">开始绘图</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 浮动属性面板 -->
+  <div id="propertyPanel" class="property-panel" style="display: none;">
+    <div class="panel-title">属性设置</div>
+    <div id="panelContent"></div>
+  </div>
+
+  <!-- 底部计数栏 -->
+  <div class="footer">
+    <div class="stats">
+      <span><i class="fas fa-shapes"></i> 图形数量: <span id="bottomShapeCount">0</span></span>
+    </div>
+    <div class="scale">
+      <span><i class="fas fa-search-plus"></i> 缩放比例: <span id="bottomZoom">100%</span></span>
+    </div>
+    <div class="view">
+      <span><i class="fas fa-arrows-left-right-to-line"></i> 偏移量: <span id="bottomOffset">0, 0</span></span>
+    </div>
+
+  </div>
+  </div>
+</body>
+<!-- <script type="module" src="js/main.js"></script> -->
+<script type="module" src="js-es6/main.js"></script>
+
+<!-- <script type="module" src="js/main.js"></script> -->
+
+</html>
