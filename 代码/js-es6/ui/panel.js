@@ -2,8 +2,8 @@ import { state } from "../core/state.js";
 import { schedulePersist } from "../core/store.js";
 import { scheduleRender } from "../core/renderer.js";
 
-const panel = document.getElementById("propertyPanel");
-const panelContent = document.getElementById("panelContent");
+const panel = typeof document !== "undefined" ? document.getElementById("propertyPanel") : null;
+const panelContent = typeof document !== "undefined" ? document.getElementById("panelContent") : null;
 
 function inputRow(label, inputHtml) {
   return `<div class="property-group"><label>${label}</label>${inputHtml}</div>`;

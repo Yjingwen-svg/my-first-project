@@ -1,3 +1,4 @@
+console.log("hello world");
 import { state } from "./core/state.js";
 import { installInteractions } from "./core/interactions.js";
 import { loadBoard, schedulePersist } from "./core/store.js";
@@ -102,4 +103,6 @@ async function bootstrap() {
   schedulePersist();
 }
 
-document.addEventListener("DOMContentLoaded", bootstrap);
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", bootstrap);
+}
