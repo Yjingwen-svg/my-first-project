@@ -2,8 +2,10 @@ import { state } from "../core/state.js";
 import { schedulePersist } from "../core/store.js";
 import { scheduleRender } from "../core/renderer.js";
 
-const panel = document.getElementById("propertyPanel");
-const panelContent = document.getElementById("panelContent");
+// 该模块在浏览器与 Node（node main.js）中都会被加载。
+// Node 环境没有 DOM，因此将顶层 DOM 查询改为惰性获取，仅在浏览器运行时使用。
+const panel = typeof document !== "undefined" ? document.getElementById("propertyPanel") : null;
+const panelContent = typeof document !== "undefined" ? document.getElementById("panelContent") : null;
 
 function inputRow(label, inputHtml) {
   return `<div class="property-group"><label>${label}</label>${inputHtml}</div>`;
@@ -77,6 +79,7 @@ function bindText(el) {
 }
 
 export function refreshPanel() {
+  if (!panel || !panelContent) return;
   const el = oneSelected();
   if (!el) {
     panel.style.display = "none";

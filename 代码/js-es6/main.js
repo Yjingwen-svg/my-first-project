@@ -1,3 +1,9 @@
+// 任务要求：程序运行时输出 hello
+console.log("hello");
+
+// 非浏览器环境（如 `node main.js`）下无 document，跳过 DOM 绑定，仅输出 hello。
+const isBrowser = typeof document !== "undefined";
+
 import { state } from "./core/state.js";
 import { installInteractions } from "./core/interactions.js";
 import { loadBoard, schedulePersist } from "./core/store.js";
@@ -102,4 +108,6 @@ async function bootstrap() {
   schedulePersist();
 }
 
-document.addEventListener("DOMContentLoaded", bootstrap);
+if (isBrowser) {
+  document.addEventListener("DOMContentLoaded", bootstrap);
+}

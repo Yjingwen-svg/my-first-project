@@ -1,0 +1,7 @@
+{
+  "name": "js-es6-whiteboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Infinite canvas whiteboard demo (ES modules). Run `node main.js` to verify the hello output."
+}
