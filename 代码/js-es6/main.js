@@ -98,6 +98,7 @@ async function bootstrap() {
   await loadBoard();
   refreshPanel();
   scheduleRender();
+  console.log('Hello, small task!');
   // 首次进入也触发一次保存，用于创建默认文档结构。
   schedulePersist();
 }
