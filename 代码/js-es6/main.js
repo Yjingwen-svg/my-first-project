@@ -103,3 +103,4 @@ async function bootstrap() {
 }
 
 document.addEventListener("DOMContentLoaded", bootstrap);
+console.log('hi');
